@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to the Game!</title>
+    <style>
+        @font-face {
+            font-family: myFont;
+            src: url('TypefaceMario64-ywA93.otf');
+        }
+
+
+
+        .bg {
+            position: absolute;
+            /* background-size: contain; */
+            z-index: -1;
+            opacity: 0.5;
+            filter: blur(5px);
+            height: 100%;
+            width: 100%;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: myFont;
+            user-select: none;
+
+            /* font-size: 101%; */
+        }
+
+        h1 {
+            display: flex;
+            justify-content: center;
+            height: 35vh;
+            
+            font-size: 50px;
+            padding-top: 5vh;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8vh;
+            height: 45vh;
+            width: 80%;
+            margin: auto;
+        }
+
+        form * {
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 25vw;
+            height: 5vh;
+            font-size: 22px;
+            border-radius: 10px;
+        }
+
+        .compart1 {
+            display: flex;
+            flex-direction: column;
+            gap: 2vh;
+            font-size: 22px;
+        }
+
+        .compart2 {
+            display: flex;
+            flex-direction: column;
+            gap: 3vh;
+            font-size: 22px;
+
+        }
+
+        .compart3 {
+            display: flex;
+            flex-direction: column;
+            gap: 3vh;
+            font-size: 22px;
+
+        }
+
+        .sizeSelecor {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5vw;
+            /* border: 1px solid; */
+            height: 5vh;
+
+
+        }
+
+        .sizeItem {
+            /* border: 1px solid; */
+            font-size: 40px;
+            cursor: pointer;
+        }
+
+        .sizeItem:nth-child(2) {
+            font-size: 25px;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        #allowUndo {
+            display: flex;
+            gap: 5vw;
+            justify-content: center;
+            align-items: center;
+            /* border: 1px solid; */
+        }
+
+        #allowUndo>label {
+            border: 1px solid;
+            border-radius: 10px;
+            padding: 1vw;
+        }
+
+        .btnDiv {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #sBtn {
+            padding: 1vw;
+            font-size: 22px;
+            border-radius: 10px;
+            cursor: pointer;
+
+        }
+
+        input[type="radio"]:checked+label {
+            background-color: black;
+            color: white;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page1">
+        <img class="bg" src="pagebg2.jpg" alt="">
+        <h1 id="heading">Welcome!</h1>
+        <form onsubmit="">
+
+            <div class="compart1">
+                <div class="comp1child">Enter Your Names</div>
+
+                <div class="comp1child">
+                    <!-- <label for="nameBlue"></label> -->
+                    <input class="nameChild" type="text" id="nameBlue" placeholder="Blue">
+                    <span class="nameChild">V/S</span>
+                    <!-- <label for="nameRed"></label> -->
+                    <input class="nameChild" type="text" id="nameRed" placeholder="Red">
+                </div>
+
+            </div>
+
+            <div class="compart2">
+
+                <div class="gridSize">Select a Grid Size Below</div>
+
+                <div class="sizeSelecor">
+                    <span class="sizeItem" id="minus"> &#9668; </span>
+                    <span class="sizeItem" id="numSize">2</span>
+                    <span class="sizeItem" id="plus"> &#9658; </span>
+                </div>
+            </div>
+
+            <div class="compart3">
+                <div class="formUndo">Allow Undo?</div>
+
+                <div class="formChild" id="allowUndo">
+                    <input type="radio" name="allowUndo" id="undoYes" checked="checked">
+                    <label class="radioText" for="undoYes">Yes</label>
+                    <input type="radio" name="allowUndo" id="undoNo">
+                    <label class="radioText" for="undoNo">No</label>
+                </div>
+
+            </div>
+            <div class="btnDiv">
+                <button class="formChild" id="sBtn" type="button">Start</button>
+            </div>
+
+            
+        </form>
+        <script>
+
+
+
+            let sButton = document.getElementById('sBtn');
+            let nameBlue = document.getElementById('nameBlue');
+            let nameRed = document.getElementById('nameRed');
+            let gridSize = document.getElementById('numSize');
+
+            let plusButton = document.getElementById('plus');
+            let minusButton = document.getElementById('minus');
+
+            let undoValue;
+            // let undoYesNo = document.getElementsByClassName('radioText');
+
+            // let undoYes = document.getElementById('undoYes');
+            // let undoNo = document.getElementById('undoNo');
+
+            let radioChoice = document.getElementsByName('allowUndo');
+
+            const takeValue = () => {
+
+                // event.preventDefault();
+
+                console.log(nameBlue.value);
+                console.log(nameRed.value);
+
+                console.log(gridSize.innerText);
+
+                if (radioChoice[0].checked) {
+                    console.log('Yes');
+                    undoValue = true;
+                } else {
+                    console.log('No');
+                    undoValue = false;
+                }
+
+                window.localStorage.setItem('gridBy', gridSize.innerText);
+                window.localStorage.setItem('blueName', nameBlue.value);
+                window.localStorage.setItem('redName', nameRed.value);
+                window.localStorage.setItem('undoValue', undoValue);
+
+                window.location.href = 'index.html';
+
+
+            }
+            sButton.addEventListener('click', takeValue);
+
+            plusButton.addEventListener('click', () => {
+                if (gridSize.innerText > 1 && gridSize.innerText < 20){
+
+                    gridSize.innerText++;
+                }
+            });
+            minusButton.addEventListener('click', () => {
+                if (gridSize.innerText > 2 && gridSize.innerText < 21){
+                    gridSize.innerText--;
+
+                }
+
+            });
+
+            // for (let i = 0; i < undoYesNo.length; i++){
+            //     console.log(undoYesNo[i])
+            // }
+
+
+
+        </script>
+    </div>
+
+
+</body>
+
+</html>
